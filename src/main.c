@@ -11,7 +11,7 @@ GtkWidget* create_main_window() {
     
     // Load CSS from external file for main window
     GtkCssProvider *provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(provider, "styles/main.css", NULL);
+    gtk_css_provider_load_from_path(provider, "src/styles/main.css", NULL);
     
     GtkStyleContext *context = gtk_widget_get_style_context(window);
     gtk_style_context_add_provider(context,
