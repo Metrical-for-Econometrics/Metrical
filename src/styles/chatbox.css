@@ -1,0 +1,129 @@
+* {
+    font-family: "Switzer", sans-serif;
+}
+.input-container {
+   background: #2a2a2a;
+   padding: 8px;
+   margin: 12px;
+}
+
+.chat-input {
+   background: transparent;
+   color: rgb(250, 249, 245);
+   font-size: 16px;
+   padding: 8px 16px;
+   border: none;
+   border-radius: 6px;
+   min-height: unset;
+   /* height: 32px; removed for GTK compatibility */
+   font-family: "Switzer", sans-serif;
+   font-weight: 300;
+}
+
+.chat-input:focus {
+   color: rgb(250, 249, 245);
+   outline: none;
+   border: none;
+   box-shadow: none;
+   background: transparent;
+}
+
+.chat-input {
+   background: transparent;
+   color: rgb(250, 249, 245);
+   font-size: 16px;
+   padding: 8px 16px;
+   border: none;
+   border-radius: 6px;
+   min-height: unset;
+   /* height: 32px; removed for GTK compatibility */
+   font-family: "Switzer", sans-serif;
+   font-weight: 300;
+   outline: none;
+   caret-color: red;
+}
+
+.send-btn {
+    background: transparent;
+    color: #81FFA1;
+    font-size: 16px;
+    min-width: 36px;
+    min-height: 36px;
+    margin-left: 8px;
+    border: none;
+    border-radius: 6px;
+    transition: none;
+    box-shadow: none;
+    font-weight: 300;
+    padding: 0;
+    outline: none;
+}
+
+.send-btn:hover, .send-btn:focus {
+    background: transparent;
+    color: #33964c;
+    outline: none;
+}
+
+.send-btn image {
+    background: transparent;
+    color: #81FFA1;
+}
+
+/* Override GTK's default button styling */
+.send-btn {
+    -gtk-icon-theme: 'none';
+    background-image: none;
+    background-color: transparent;
+}
+
+.send-btn:active {
+    background: transparent;
+    background-image: none;
+}
+
+
+.send-arrow {   
+    color: #81FFA1;
+    font-size: 16px;
+    margin: 0;
+    background: transparent;
+    font-family: "Switzer", sans-serif;
+    font-weight: 300;
+}
+
+.input-container:focus-within {
+   box-shadow: 0 0 0 2px rgba(0, 255, 136, 0.2);
+}
+
+/* Message styling */
+.message-container {
+   margin: 4px 12px;
+}
+
+.message-list {
+   background: transparent;
+   padding: 4px 0;
+}
+
+.message-ai {
+   background: #131313;
+   color: rgb(250, 249, 245);
+   font-size: 14px;
+   padding: 8px 12px;
+   border: #3A3A3A;
+   border-radius: 10px 10px 10px 0px;
+   font-family: "Switzer", sans-serif;
+   font-weight: 300;
+}
+
+.message-user {
+   background: #07130A;
+   color: #00ff88;
+   font-size: 14px;
+   padding: 8px 12px;
+   border: 2px solid #00ff88;
+   border-radius: 10px 10px 0px 10px;
+   font-family: "Switzer", sans-serif;
+   font-weight: 300;
+} 
