@@ -1,2 +1,2 @@
 # Metrical
-Metrical is a statistics/relationship app finder for econometrics.
+Metrical is an extremely easy statistical tool to automate econometrics.
