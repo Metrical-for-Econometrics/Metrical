@@ -2,6 +2,28 @@
 #include "assistant.h"
 #include <librsvg/rsvg.h>
 
+
+
+// New function to handle the AI response
+static void handle_llm_response(const char* ai_response, GtkWidget* message_list) {
+    if (ai_response) {
+        // Print the same response to the console as shown in the message box
+        g_print("AI response: %s\n", ai_response);
+        // Create AI message widget
+        GtkWidget *ai_message = chatbox_message_ai(ai_response);
+        // Add AI message to the list
+        gtk_box_pack_start(GTK_BOX(message_list), ai_message, FALSE, FALSE, 0);
+        // Show the AI message
+        gtk_widget_show_all(ai_message);
+        // Scroll to the bottom again to show the AI response
+        GtkAdjustment *adj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(
+            gtk_widget_get_parent(gtk_widget_get_parent(message_list))));
+        if (adj) {
+            gtk_adjustment_set_value(adj, gtk_adjustment_get_upper(adj));
+        }
+    }
+}
+
 // Callback function for send button click
 static void on_send_button_clicked(GtkWidget *button, gpointer user_data) {
     GtkWidget *input_entry = (GtkWidget*)user_data;
@@ -33,26 +55,10 @@ static void on_send_button_clicked(GtkWidget *button, gpointer user_data) {
                 gtk_adjustment_set_value(adj, gtk_adjustment_get_upper(adj));
             }
             
-            // Get AI response and display it
+            // Get AI response and handle it
             char* ai_response = assistant_send_message(text);
-            if (ai_response) {
-                // Create AI message widget
-                GtkWidget *ai_message = chatbox_message_ai(ai_response);
-                
-                // Add AI message to the list
-                gtk_box_pack_start(GTK_BOX(message_list), ai_message, FALSE, FALSE, 0);
-                
-                // Show the AI message
-                gtk_widget_show_all(ai_message);
-                
-                // Scroll to the bottom again to show the AI response
-                if (adj) {
-                    gtk_adjustment_set_value(adj, gtk_adjustment_get_upper(adj));
-                }
-                
-                // Free the AI response memory
-                assistant_free_response(ai_response);
-            }
+            handle_llm_response(ai_response, message_list);
+            assistant_free_response(ai_response);
         }
         
         // Clear the input field
@@ -128,7 +134,7 @@ GtkWidget* chatbox_send_button(GtkWidget* input_entry, SendMessageCallback callb
     
     // Load CSS from external file
     GtkCssProvider *provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(provider, "styles/chatbox.css", NULL);
+    gtk_css_provider_load_from_path(provider, "src/styles/chatbox.css", NULL);
     
     // Apply CSS to button
     gtk_style_context_add_provider(button_context,
@@ -169,7 +175,7 @@ GtkWidget* chatbox_user_input(SendMessageCallback callback, GtkWidget* message_l
     
     // Load CSS from external file
     GtkCssProvider *provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(provider, "styles/chatbox.css", NULL);
+    gtk_css_provider_load_from_path(provider, "src/styles/chatbox.css", NULL);
     
     // Apply CSS to container and input
     gtk_style_context_add_provider(container_context,
@@ -199,7 +205,10 @@ GtkWidget* chatbox_message_ai(const char* message_text) {
     gtk_widget_set_halign(message_box, GTK_ALIGN_START);
     gtk_widget_set_valign(message_box, GTK_ALIGN_START);
     gtk_widget_set_margin_end(message_box, 60); // Leave space for user messages
-    
+    // Enable line wrapping
+    gtk_label_set_line_wrap(GTK_LABEL(message_box), TRUE);
+    gtk_label_set_line_wrap_mode(GTK_LABEL(message_box), PANGO_WRAP_WORD_CHAR);
+    gtk_label_set_max_width_chars(GTK_LABEL(message_box), 60);
     // Add CSS class to message box
     GtkStyleContext *message_context = gtk_widget_get_style_context(message_box);
     gtk_style_context_add_class(message_context, "message-ai");
@@ -209,7 +218,7 @@ GtkWidget* chatbox_message_ai(const char* message_text) {
     
     // Load CSS from external file
     GtkCssProvider *provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(provider, "styles/chatbox.css", NULL);
+    gtk_css_provider_load_from_path(provider, "src/styles/chatbox.css", NULL);
     
     // Apply CSS to container and message
     gtk_style_context_add_provider(container_context,
@@ -249,7 +258,7 @@ GtkWidget* chatbox_message_user(const char* message_text) {
     
     // Load CSS from external file
     GtkCssProvider *provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(provider, "styles/chatbox.css", NULL);
+    gtk_css_provider_load_from_path(provider, "src/styles/chatbox.css", NULL);
     
     // Apply CSS to container and message
     gtk_style_context_add_provider(container_context,
@@ -289,7 +298,7 @@ GtkWidget* chatbox_view() {
     
     // Load CSS from external file
     GtkCssProvider *provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_path(provider, "styles/chatbox.css", NULL);
+    gtk_css_provider_load_from_path(provider, "src/styles/chatbox.css", NULL);
     
     // Apply CSS to message list
     gtk_style_context_add_provider(list_context,
