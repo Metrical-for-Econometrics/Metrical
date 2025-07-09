@@ -311,13 +311,7 @@ GtkWidget* chatbox_view() {
 // Default callback function for send button
 static void default_send_callback(const char* message) {
     g_print("Message sent: %s\n", message);
-    
-    // Get AI response
-    char* ai_response = assistant_send_message(message);
-    if (ai_response) {
-        g_print("AI response: %s\n", ai_response);
-        assistant_free_response(ai_response);
-    }
+    // Call back is implemented above L130
 }
 
 GtkWidget* chatbox_window() {
