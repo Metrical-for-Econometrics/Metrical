@@ -43,7 +43,7 @@ char* assistant_send_message(const char* message) {
     if (!curl) return strdup("Error: Could not initialize curl");
 
     // OpenRouter API key and endpoint
-    const char* api_key = "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";
+    const char* api_key = getenv("OPENROUTER_API_KEY");
     const char* url = "https://openrouter.ai/api/v1/chat/completions";
     char post_data[2048];
     snprintf(post_data, sizeof(post_data),
